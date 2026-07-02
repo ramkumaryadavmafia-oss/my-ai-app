@@ -1,0 +1,167 @@
+// Save Chat
+function saveChat() {
+    let chatBox = document.getElementById("chatBox");
+    localStorage.setItem("chatHistory", chatBox.innerHTML);
+}
+
+// Send Message
+function sendMessage() {
+
+    let input = document.getElementById("userInput");
+    let chatBox = document.getElementById("chatBox");
+
+    let message = input.value.trim();
+
+    if (message === "") {
+        alert("Pehle kuch likhiye!");
+        return;
+    }
+
+    let time = new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+    // User Message
+    chatBox.innerHTML += `
+    <div class="message">
+        <div class="avatar">👤</div>
+        <div class="user-message">
+            ${message}
+            <div class="time">${time}</div>
+        </div>
+    </div>`;
+
+    input.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+    saveChat();
+
+    // Typing
+    chatBox.innerHTML += `
+    <div id="typing" class="message">
+        <div class="avatar">🤖</div>
+        <div class="ai-message">Typing...</div>
+    </div>`;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    setTimeout(function () {
+
+        document.getElementById("typing").remove();
+
+        let aiReply = "";
+
+        switch (message.toLowerCase()) {
+            case "hello":
+                aiReply = "Hello! Kaise ho?";
+                break;
+
+            case "hi":
+                aiReply = "Hi! Main aapki kya madad kar sakta hoon?";
+                break;
+
+            case "tumhara naam kya hai":
+                aiReply = "Mera naam My AI Chat hai.";
+                break;
+
+            case "thank you":
+                aiReply = "Aapka swagat hai 😊";
+                break;
+
+            default:
+                aiReply = "Abhi main basic version hoon. Jaldi hi Real AI connect karenge.";
+        }
+
+        chatBox.innerHTML += `
+        <div class="message">
+            <div class="avatar">🤖</div>
+            <div class="ai-message">
+                ${aiReply}
+                <div class="time">${time}</div>
+            </div>
+        </div>`;
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+        saveChat();
+
+    }, 1000);
+}
+
+// Enter Key
+document.getElementById("userInput").addEventListener("keypress", function(e){
+    if(e.key === "Enter"){
+        sendMessage();
+    }
+});
+
+// Clear Chat
+function clearChat(){
+
+    if(confirm("Kya aap sari chat delete karna chahte hain?")){
+
+        document.getElementById("chatBox").innerHTML = "";
+
+        localStorage.removeItem("chatHistory");
+
+    }
+
+}
+
+// Dark Mode
+function toggleDarkMode(){
+
+    document.body.classList.toggle("dark-mode");
+
+    if(document.body.classList.contains("dark-mode")){
+        localStorage.setItem("theme","dark");
+    }else{
+        localStorage.setItem("theme","light");
+    }
+
+}
+
+// Load Data
+window.onload = function(){
+
+    let chat = localStorage.getItem("chatHistory");
+
+    if(chat){
+        document.getElementById("chatBox").innerHTML = chat;
+    }
+
+    let theme = localStorage.getItem("theme");
+
+    if(theme === "dark"){
+        document.body.classList.add("dark-mode");
+    }
+
+}
+function openSettings(){
+    document.getElementById("settingsPanel").style.display = "block";
+}
+
+function closeSettings(){
+    document.getElementById("settingsPanel").style.display = "none";
+}
+function startVoice(){
+
+    let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+    recognition.lang = "en-IN"; // Hindi + English mix support
+    recognition.start();
+
+    recognition.onresult = function(event){
+
+        let text = event.results[0][0].transcript;
+
+        document.getElementById("userInput").value = text;
+
+        // Auto send bhi kar sakte ho
+        sendMessage();
+    };
+
+    recognition.onerror = function(){
+        alert("Voice input error ho gaya!");
+    };
+
+} 

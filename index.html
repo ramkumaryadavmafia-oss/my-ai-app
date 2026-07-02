@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My AI Chat</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <div class="logo">🤖</div>
+
+        <div class="title">
+            <h2>My AI Chat</h2>
+            <p>🟢 Online</p>
+        </div>
+
+        <!-- MENU -->
+        <div class="menu">
+
+            <button onclick="toggleDarkMode()">🌙</button>
+            <button onclick="clearChat()">🗑️</button>
+            <button onclick="openSettings()">⚙️</button>
+
+        </div>
+
+    </div>
+
+    <!-- CHAT BOX -->
+    <div class="chat-box" id="chatBox">
+
+        <div class="message">
+
+            <div class="avatar">🤖</div>
+
+            <div class="ai-message">
+                Hello! Main aapki madad ke liye ready hoon.
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- INPUT AREA -->
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="userInput"
+            placeholder="Type your message...">
+
+        <button onclick="sendMessage()">Send</button>
+        
+        <button onclick="startVoice()" class="mic-btn">🎤</button>
+
+    </div>
+
+</div>
+
+<!-- SETTINGS PANEL -->
+<div id="settingsPanel" class="settings-panel">
+
+    <h3>⚙️ Settings</h3>
+
+    <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    <button onclick="clearChat()">🗑️ Clear Chat</button>
+    <button onclick="closeSettings()">❌ Close</button>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
