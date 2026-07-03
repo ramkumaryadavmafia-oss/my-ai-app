@@ -19,9 +19,15 @@ app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
 
+    const today = new Date().toLocaleDateString("en-IN", {
+  day: "numeric",
+  month: "long",
+  year: "numeric"
+});
+
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: "Tum ek smart AI assistant ho. Hamesha simple Hindi me 2-3 line me jawab do. Agar user detail maange tabhi lamba jawab dena. User: " + message,
+      contents: "Aaj ki date ${today} hai. Is date ko current date maan kar jawab do.Tum ek smart AI assistant ho. Hamesha simple Hindi me 2-3 line me jawab do. Agar user detail maange tabhi lamba jawab dena. User: " + message,
 });
 
     res.json({
