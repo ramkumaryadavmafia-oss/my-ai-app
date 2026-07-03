@@ -21,8 +21,8 @@ app.post("/chat", async (req, res) => {
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: message,
-    });
+      contents: "Tum ek smart AI assistant ho. Hamesha simple Hindi me 2-3 line me jawab do. Agar user detail maange tabhi lamba jawab dena. User: " + message,
+});
 
     res.json({
       reply: response.text,
