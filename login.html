@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - My AI App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="chat-container">
+
+  <div class="header">
+    <h2>🔐 Login</h2>
+  </div>
+
+  <div style="padding:20px;">
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Email"
+      style="width:100%;padding:10px;margin-bottom:10px;">
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Password"
+      style="width:100%;padding:10px;margin-bottom:10px;">
+
+    <button onclick="login()" style="width:100%;padding:10px;">
+      Login
+    </button>
+
+    <br><br>
+
+    <button onclick="signup()" style="width:100%;padding:10px;">
+      Sign Up
+    </button>
+
+  </div>
+
+</div>
+
+<script type="module" src="login.js"></script>
+
+</body>
+</html>
