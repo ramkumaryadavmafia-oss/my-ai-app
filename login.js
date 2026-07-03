@@ -6,12 +6,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAAHlv466bMEtiCf_Z0fHA9wgFfcQgqEsg",
+  authDomain: "my-ai-app-cdfce.firebaseapp.com",
+  projectId: "my-ai-app-cdfce",
+  storageBucket: "my-ai-app-cdfce.firebasestorage.app",
+  messagingSenderId: "306306694555",
+  appId: "1:306306694555:web:90372c9f6d970544acf53e",
+  measurementId: "G-SQHZNR1QK0"
 };
 
 const app = initializeApp(firebaseConfig);
