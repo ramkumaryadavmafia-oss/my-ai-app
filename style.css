@@ -186,25 +186,9 @@ body{
 .mic-btn:hover{
     background:#1e7e34;
 }
-function startVoice(){
 
-    let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-
-    recognition.lang = "en-IN"; // Hindi + English mix support
-    recognition.start();
-
-    recognition.onresult = function(event){
-
-        let text = event.results[0][0].transcript;
-
-        document.getElementById("userInput").value = text;
-
-        // Auto send bhi kar sakte ho
-        sendMessage();
-    };
-
-    recognition.onerror = function(){
-        alert("Voice input error ho gaya!");
-    };
-
+.logo img{
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
 }
