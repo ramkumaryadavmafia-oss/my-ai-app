@@ -36,7 +36,7 @@ app.post("/chat", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      reply: "Error talking to Gemini AI",
+      reply: "⚠️ Aaj ke liye AI limit khatam ho gayi hai. Kripya thodi der baad ya kal phir try karein.",
     });
   }
 });
