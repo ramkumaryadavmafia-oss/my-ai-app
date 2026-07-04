@@ -1,4 +1,11 @@
-import { auth } from "./firebase.js";
+import { auth, db } from "./firebase.js";
+
+import {
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
 import { signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 const SERVER_URL = "https://my-ai-app-5.onrender.com";
