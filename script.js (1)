@@ -47,6 +47,16 @@ async function sendMessage() {
     input.value = "";
     chatBox.scrollTop = chatBox.scrollHeight;
     saveChat();
+try {
+    await addDoc(collection(db, "chats"), {
+        uid: auth.currentUser.uid,
+        sender: "user",
+        message: message,
+        time: serverTimestamp()
+    });
+} catch (error) {
+    console.log("Firestore Error:", error);
+}
 
     // Typing
     chatBox.innerHTML += `
