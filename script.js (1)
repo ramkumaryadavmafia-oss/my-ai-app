@@ -1,3 +1,8 @@
+import { auth } from "./firebase.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+const SERVER_URL = "https://my-ai-app-5.onrender.com";
+
 // Save Chat
 function saveChat() {
     let chatBox = document.getElementById("chatBox");
@@ -5,7 +10,7 @@ function saveChat() {
 }
 
 // Send Message
-function sendMessage() {
+async function sendMessage() {
 
     let input = document.getElementById("userInput");
     let chatBox = document.getElementById("chatBox");
@@ -45,31 +50,33 @@ function sendMessage() {
 
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    setTimeout(function () {
+    setTimeout(async function () {
 
-        document.getElementById("typing").remove();
+        let typing = document.getElementById("typing");
+        if (typing) typing.remove();
 
         let aiReply = "";
 
-        switch (message.toLowerCase()) {
-            case "hello":
-                aiReply = "Hello! Kaise ho?";
-                break;
+        try {
 
-            case "hi":
-                aiReply = "Hi! Main aapki kya madad kar sakta hoon?";
-                break;
+            const response = await fetch(`${SERVER_URL}/chat`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: message
+                })
+            });
 
-            case "tumhara naam kya hai":
-                aiReply = "Mera naam My AI Chat hai.";
-                break;
+            const data = await response.json();
 
-            case "thank you":
-                aiReply = "Aapka swagat hai 😊";
-                break;
+            aiReply = data.reply;
 
-            default:
-                aiReply = "Abhi main basic version hoon. Jaldi hi Real AI connect karenge.";
+        } catch (error) {
+
+            aiReply = "❌ Server se connect nahi ho pa raha.";
+
         }
 
         chatBox.innerHTML += `
@@ -85,6 +92,7 @@ function sendMessage() {
         saveChat();
 
     }, 1000);
+
 }
 
 // Enter Key
@@ -136,6 +144,8 @@ window.onload = function(){
     }
 
 }
+
+// Settings
 function openSettings(){
     document.getElementById("settingsPanel").style.display = "block";
 }
@@ -143,11 +153,20 @@ function openSettings(){
 function closeSettings(){
     document.getElementById("settingsPanel").style.display = "none";
 }
+
+// Voice Input
 function startVoice(){
 
-    let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    recognition.lang = "en-IN"; // Hindi + English mix support
+    if(!SpeechRecognition){
+        alert("Voice recognition is not supported in this browser.");
+        return;
+    }
+
+    let recognition = new SpeechRecognition();
+
+    recognition.lang = "en-IN";
     recognition.start();
 
     recognition.onresult = function(event){
@@ -156,7 +175,6 @@ function startVoice(){
 
         document.getElementById("userInput").value = text;
 
-        // Auto send bhi kar sakte ho
         sendMessage();
     };
 
@@ -164,4 +182,32 @@ function startVoice(){
         alert("Voice input error ho gaya!");
     };
 
-} 
+}
+
+// Logout
+async function logout() {
+
+    try {
+
+        await signOut(auth);
+
+        alert("Logout Successful");
+
+        window.location.href = "login.html";
+
+    } catch (error) {
+
+        alert("Logout Failed: " + error.message);
+
+    }
+
+}
+
+// HTML buttons ko module functions se connect karo
+window.sendMessage = sendMessage;
+window.clearChat = clearChat;
+window.toggleDarkMode = toggleDarkMode;
+window.openSettings = openSettings;
+window.closeSettings = closeSettings;
+window.startVoice = startVoice;
+window.logout = logout;
