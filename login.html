@@ -1,48 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - My AI App</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroChat Login</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0f172a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.login-box{
+    width:90%;
+    max-width:350px;
+    background:#fff;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,.3);
+    text-align:center;
+}
+
+.login-box img{
+    width:80px;
+    height:80px;
+    border-radius:15px;
+    margin-bottom:15px;
+}
+
+.login-box h2{
+    margin-bottom:20px;
+}
+
+.login-box input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+    box-sizing:border-box;
+    font-size:15px;
+}
+
+.login-box button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.login-box button:hover{
+    background:#1d4ed8;
+}
+
+.signup-btn{
+    background:#16a34a !important;
+}
+
+.signup-btn:hover{
+    background:#15803d !important;
+}
+</style>
+
 </head>
 <body>
 
-<div class="chat-container">
+<div class="login-box">
 
-  <div class="header">
-    <h2>🔐 Login</h2>
-  </div>
+<img src="logo.png" alt="Logo">
 
-  <div style="padding:20px;">
+<h2>NeuroChat</h2>
 
-    <input
-      type="email"
-      id="email"
-      placeholder="Email"
-      style="width:100%;padding:10px;margin-bottom:10px;">
+<input
+type="email"
+id="email"
+placeholder="Email">
 
-    <input
-      type="password"
-      id="password"
-      placeholder="Password"
-      style="width:100%;padding:10px;margin-bottom:10px;">
+<input
+type="password"
+id="password"
+placeholder="Password">
 
-    <button onclick="login()" style="width:100%;padding:10px;">
-      Login
-    </button>
+<button onclick="login()">Login</button>
 
-    <br><br>
-
-    <button onclick="signup()" style="width:100%;padding:10px;">
-      Sign Up
-    </button>
-
-  </div>
+<button class="signup-btn" onclick="signup()">Create Account</button>
 
 </div>
 
-<script type="module" src="login.js"></script>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import {
+getAuth,
+signInWithEmailAndPassword,
+createUserWithEmailAndPassword,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAAHlv466bMEtiCf_Z0fHA9wgFfcQgqEsg",
+authDomain: "my-ai-app-cdfce.firebaseapp.com",
+projectId: "my-ai-app-cdfce",
+storageBucket: "my-ai-app-cdfce.firebasestorage.app",
+messagingSenderId: "306306694555",
+appId: "1:306306694555:web:90372c9f6d970544acf53e"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth,(user)=>{
+if(user){
+window.location.href="index.html";
+}
+});
+
+window.login = async function(){
+
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+try{
+
+await signInWithEmailAndPassword(auth,email,password);
+
+window.location.href="index.html";
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+window.signup = async function(){
+
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+try{
+
+await createUserWithEmailAndPassword(auth,email,password);
+
+alert("Account Created Successfully");
+
+window.location.href="index.html";
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
