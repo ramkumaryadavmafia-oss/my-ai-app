@@ -90,7 +90,17 @@ try {
 
             aiReply = data.reply;
 
-        } catch (error) {
+try {
+    await addDoc(collection(db, "chats"), {
+        uid: auth.currentUser.uid,
+        sender: "ai",
+        message: aiReply,
+        time: serverTimestamp()
+    });
+} catch (error) {
+    console.log("Firestore AI Save Error:", error);
+}
+      } catch (error) {
 
             aiReply = "❌ Server se connect nahi ho pa raha.";
 
