@@ -49,11 +49,17 @@ const app=initializeApp(firebaseConfig);
 
 const auth=getAuth(app);
 
-onAuthStateChanged(auth,(user)=>{
+onAuthStateChanged(auth, (user) => {
 
-if(!user){
+if (user) {
 
-window.location.href="login.html";
+// user logged in → allow access
+console.log("User logged in");
+
+} else {
+
+// user not logged in → send to login page
+window.location.href = "login.html";
 
 }
 
