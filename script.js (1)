@@ -145,6 +145,22 @@ function clearChat(){
 
 }
 
+function newChat() {
+
+    if (confirm("Nayi chat shuru karni hai?")) {
+
+        document.getElementById("chatBox").innerHTML = `
+        <div class="message">
+            <div class="avatar">🤖</div>
+            <div class="ai-message">
+                Hello! Main Neuro hoon. Main aapki kis tarah madad kar sakta hoon?
+            </div>
+        </div>`;
+
+        localStorage.removeItem("chatHistory");
+    }
+}
+
 // Dark Mode
 function toggleDarkMode(){
 
@@ -256,3 +272,5 @@ window.closeSettings = closeSettings;
 window.startVoice = startVoice;
 window.logout = logout;
 window.speak = speak;
+window.newChat = newChat;
+
