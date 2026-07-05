@@ -100,6 +100,9 @@ try {
 } catch (error) {
     console.log("Firestore AI Save Error:", error);
 }
+
+speak(aiReply);
+
       } catch (error) {
 
             aiReply = "❌ Server se connect nahi ho pa raha.";
@@ -230,6 +233,20 @@ async function logout() {
 
 }
 
+// AI Voice
+function speak(text) {
+
+    let speech = new SpeechSynthesisUtterance(text);
+
+    speech.lang = "hi-IN";
+    speech.rate = 1;
+    speech.pitch = 1;
+    speech.volume = 1;
+
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech);
+}
+
 // HTML buttons ko module functions se connect karo
 window.sendMessage = sendMessage;
 window.clearChat = clearChat;
@@ -238,3 +255,4 @@ window.openSettings = openSettings;
 window.closeSettings = closeSettings;
 window.startVoice = startVoice;
 window.logout = logout;
+window.speak = speak;
